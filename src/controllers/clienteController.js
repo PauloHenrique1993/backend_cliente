@@ -27,3 +27,27 @@ exports.Insert = (req, res, next) => {
         //catch = registra o que queremos que aconteca quando a Promise falhar
         .catch(error => next(error));
 };
+
+exports.SelectAll = (req, res, next) => {
+    Cliente.findAll()
+    .then(cliente => {
+        if (cliente) {
+            res.status(status.OK).send(cliente);
+        }
+    })
+    .catch(error => next(error));
+}
+
+exports.SelectDetail = (req, res, next) => {
+    const id = req.params.id;
+
+    Cliente.findByPk(id)
+    .then(cliente => {
+        if (cliente) {
+            res.status(status.OK).send(cliente);
+        } else {
+            res.status(status.NOT_FOUND).send();
+        }
+    })
+    .catch(error => next(error));
+};
