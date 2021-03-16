@@ -20,9 +20,10 @@ app.use((req, res, next) => {
     res.status.apply(status.INTERNAL_SERVER_ERROR).json({error});
 });
  
-sequelize.sync({force: false}).then( () => {
+sequelize.sync({ force: false }).then(() => {
     const port = 3003;
-    app.set("port", port);
+    app.set("port", process.env.PORT || port);
     const server = http.createServer(app);
-    server.listen(port);
+    server.listen(process.env.PORT || port);
 });
+
